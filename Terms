@@ -1,0 +1,92 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Terms of Service — Automoria</title>
+<link href="https://fonts.googleapis.com/css2?family=DM+Sans:wght@300;400;500;600;700&family=DM+Mono:wght@400;500&display=swap" rel="stylesheet">
+<style>
+:root{--black:#0c0c0c;--dark:#111;--stroke:#262626;--white:#f5f5f0;--gray:#999;--dim:#666;--accent:#00bfff}
+*{margin:0;padding:0;box-sizing:border-box}
+body{font-family:'DM Sans',sans-serif;background:var(--black);color:var(--white);-webkit-font-smoothing:antialiased}
+a{color:var(--accent);text-decoration:underline}
+.wrap{max-width:720px;margin:0 auto;padding:80px 32px 120px}
+.back{display:inline-block;margin-bottom:40px;font-size:13px;color:var(--dim);text-decoration:none;transition:color .2s}
+.back:hover{color:var(--accent)}
+h1{font-size:32px;font-weight:700;letter-spacing:-.5px;margin-bottom:6px}
+.date{font-family:'DM Mono',monospace;font-size:11px;color:var(--dim);margin-bottom:40px}
+h2{font-size:17px;font-weight:600;margin:32px 0 8px;color:var(--white)}
+p,li{font-size:14px;color:var(--gray);line-height:1.8;margin-bottom:8px}
+ul{padding-left:20px;margin:8px 0 16px}
+li{margin-bottom:4px}
+strong{color:var(--white)}
+</style>
+</head>
+<body>
+<div class="wrap">
+<a href="/" class="back">← Back to Automoria</a>
+<h1>Terms of Service</h1>
+<div class="date">Effective February 15, 2026</div>
+
+<h2>1. Agreement</h2>
+<p>By accessing or using Automoria's website and services, you agree to be bound by these Terms of Service. If you do not agree to these terms, please do not use our services. You must be at least 18 years of age to use our services.</p>
+
+<h2>2. Services Description</h2>
+<p>Automoria provides AI-powered receptionist services for businesses, including automated call answering, appointment scheduling, SMS text message notifications, and customer follow-up communications.</p>
+
+<h2>3. SMS Messaging Terms</h2>
+<p>By providing your mobile phone number and opting in, you agree to receive automated SMS text messages from Automoria. Below are the complete terms governing our SMS messaging program:</p>
+<ul>
+<li><strong>SMS Use Cases:</strong> You will receive text messages for appointment confirmations, appointment reminders, meeting link delivery, and service follow-up communications.</li>
+<li><strong>Message Frequency:</strong> Message frequency varies based on your interaction with our services. Typically 3–5 messages per scheduled appointment.</li>
+<li><strong>Message &amp; Data Rates:</strong> Standard message and data rates may apply to any messages sent or received. Check with your mobile carrier for details about your messaging plan.</li>
+<li><strong>Opt-Out Instructions:</strong> You may opt out of receiving SMS messages at any time by replying <strong>STOP</strong> to any message you receive from us. After opting out, you will receive a one-time confirmation message. You will no longer receive SMS messages from Automoria unless you opt in again.</li>
+<li><strong>Help:</strong> For assistance, reply <strong>HELP</strong> to any message, or contact us at help@automoria.com or (949) 565-2316.</li>
+<li><strong>Consent Not Required for Purchase:</strong> SMS consent is not required as a condition of purchasing any goods or services from Automoria.</li>
+<li><strong>No Mobile Info Sharing:</strong> We do not sell, share, or distribute your mobile phone number or SMS opt-in information to any third parties for marketing or promotional purposes.</li>
+<li><strong>Carrier Liability:</strong> Carriers (T-Mobile, AT&amp;T, Verizon, etc.) are not liable for delayed or undelivered messages. Message delivery is subject to effective transmission from your wireless carrier.</li>
+</ul>
+
+<h2>4. Age Restriction</h2>
+<p>Our services are intended for individuals who are at least 18 years of age. By using our services and opting in to SMS messaging, you confirm that you are at least 18 years old. We do not knowingly collect information from individuals under 18.</p>
+
+<h2>5. Customer Support Contact</h2>
+<p>For questions, concerns, or support regarding our services or SMS messaging program, you can reach us at:</p>
+<ul>
+<li>Email: help@automoria.com</li>
+<li>Phone: (949) 565-2316</li>
+<li>SMS: Reply HELP to any message</li>
+</ul>
+
+<h2>6. Your Obligations</h2>
+<ul>
+<li>Provide accurate and complete information</li>
+<li>Use our services for lawful purposes only</li>
+<li>Do not interfere with the operation of our services</li>
+<li>Maintain the confidentiality of any account credentials</li>
+</ul>
+
+<h2>7. Limitation of Liability</h2>
+<p>Services are provided "as is" without warranties of any kind. Automoria shall not be liable for any indirect, incidental, special, or consequential damages. Our total liability is limited to the fees you paid to us in the 12 months preceding the claim.</p>
+
+<h2>8. Termination</h2>
+<p>Either party may terminate the service relationship with written notice. Upon termination, your data will be deleted within 30 days unless retention is required by law.</p>
+
+<h2>9. Privacy Policy</h2>
+<p>Your use of our services is also governed by our <a href="/privacy.html">Privacy Policy</a>, which describes how we collect, use, and protect your personal information.</p>
+
+<h2>10. Governing Law</h2>
+<p>These terms are governed by the laws of the State of California.</p>
+
+<h2>11. Changes to Terms</h2>
+<p>We may update these Terms of Service from time to time. Continued use of our services after changes are posted constitutes acceptance of the revised terms.</p>
+
+<h2>12. Contact</h2>
+<p>Nathan Vo — Automoria<br>
+Email: help@automoria.com<br>
+Phone: (949) 565-2316<br>
+Location: Orange County, CA</p>
+
+</div>
+</body>
+</html>
