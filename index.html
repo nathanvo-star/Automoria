@@ -42,17 +42,23 @@ body::after{
 @keyframes fadeUp{from{opacity:0;transform:translateY(28px)}to{opacity:1;transform:translateY(0)}}
 @keyframes slideRight{from{opacity:0;transform:translateX(-16px)}to{opacity:1;transform:translateX(0)}}
 @keyframes pulse{0%,100%{opacity:1}50%{opacity:.3}}
-@keyframes float{0%,100%{transform:translate(0,0)}50%{transform:translate(0,-20px)}}
 @keyframes marqueeScroll{0%{transform:translateX(0)}100%{transform:translateX(-50%)}}
 .reveal{opacity:0;transform:translateY(28px);transition:opacity .7s ease,transform .7s ease}
 .reveal.vis{opacity:1;transform:translateY(0)}
 
+/* ══ CONTAINER ══ */
+.container{max-width:1000px;margin:0 auto;padding:0 48px}
+
 /* ══ NAV ══ */
 nav{
   position:fixed;top:0;width:100%;z-index:1000;
-  padding:20px 32px;display:flex;justify-content:space-between;align-items:center;
+  padding:20px 0;
   background:rgba(12,12,12,.88);backdrop-filter:blur(16px);
   border-bottom:1px solid var(--stroke);
+}
+.nav-inner{
+  max-width:1000px;margin:0 auto;padding:0 48px;
+  display:flex;justify-content:space-between;align-items:center;
 }
 .nav-logo{font-family:'DM Mono',monospace;font-size:15px;font-weight:500;letter-spacing:2px;text-transform:uppercase}
 .nav-logo span{color:var(--accent)}
@@ -60,7 +66,7 @@ nav{
 .nav-right a{font-size:13px;color:var(--white);transition:color .2s;font-weight:500}
 .nav-right a:hover{color:var(--accent)}
 .nav-btn{
-  font-size:12px;font-weight:600;letter-spacing:.5px;text-transform:uppercase;
+  font-size:12px;letter-spacing:.5px;text-transform:uppercase;
   padding:10px 20px;background:var(--accent);color:#000;font-weight:700;
   border-radius:6px;font-family:'DM Sans',sans-serif;
   transition:all .3s;
@@ -68,14 +74,14 @@ nav{
 .nav-btn:hover{box-shadow:0 0 20px var(--accent-glow);opacity:.9}
 
 /* ══ HERO ══ */
-.hero{padding:160px 32px 100px;max-width:900px;position:relative}
-
+.hero{
+  padding:160px 0 100px;position:relative;
+}
 .hero-glow{
   position:absolute;top:-100px;left:-200px;width:600px;height:600px;
   background:radial-gradient(circle,rgba(0,191,255,.06),transparent 70%);
   pointer-events:none;filter:blur(40px);
 }
-
 .hero-tag{
   font-family:'DM Mono',monospace;font-size:12px;color:var(--accent);
   letter-spacing:2px;text-transform:uppercase;margin-bottom:24px;
@@ -92,7 +98,7 @@ nav{
 }
 .hero h1 em{font-style:normal;color:var(--accent);text-shadow:0 0 40px var(--accent-glow2)}
 
-.hero>p{
+.hero>p,.hero .container>p{
   font-size:18px;line-height:1.7;color:var(--gray);
   max-width:520px;margin-bottom:36px;font-weight:300;
   animation:fadeUp .7s ease-out .2s both;
@@ -115,7 +121,8 @@ nav{
 .btn-outline:hover{border-color:var(--accent);color:var(--accent)}
 
 /* ══ DIVIDER ══ */
-.divider{height:1px;background:var(--stroke);margin:0 32px}
+.divider{max-width:1000px;margin:0 auto;padding:0 48px}
+.divider-line{height:1px;background:var(--stroke)}
 
 /* ══ MARQUEE ══ */
 .marquee-wrap{
@@ -133,7 +140,7 @@ nav{
 /* ══ NUMBERS ══ */
 .numbers{
   display:grid;grid-template-columns:repeat(4,1fr);
-  padding:48px 32px;gap:24px;max-width:900px;
+  padding:48px 0;gap:24px;
 }
 .num{border-left:1px solid var(--stroke);padding-left:20px;transition:border-color .3s}
 .num:hover{border-left-color:var(--accent)}
@@ -141,7 +148,7 @@ nav{
 .num-lbl{font-size:13px;color:var(--dim)}
 
 /* ══ SECTIONS ══ */
-section{padding:80px 32px;max-width:900px}
+.section{padding:80px 0}
 .sec-head{margin-bottom:48px}
 .sec-tag{font-family:'DM Mono',monospace;font-size:11px;letter-spacing:2px;text-transform:uppercase;color:var(--dim);margin-bottom:12px}
 .sec-title{font-size:clamp(24px,3vw,36px);font-weight:700;letter-spacing:-.5px;line-height:1.15}
@@ -240,10 +247,10 @@ section{padding:80px 32px;max-width:900px}
 .consent-sub a{color:var(--accent);text-decoration:underline}
 
 /* ══ FOOTER ══ */
-footer{
-  border-top:1px solid var(--stroke);padding:40px 32px;
+footer{border-top:1px solid var(--stroke);padding:40px 0;background:var(--black)}
+.foot-inner{
   display:flex;justify-content:space-between;align-items:flex-start;
-  max-width:900px;flex-wrap:wrap;gap:32px;
+  flex-wrap:wrap;gap:32px;
 }
 .foot-left p{font-size:12px;color:var(--dim);margin-top:8px;max-width:280px;line-height:1.5}
 .foot-links{display:flex;gap:40px}
@@ -251,9 +258,9 @@ footer{
 .foot-col a{display:block;font-size:13px;color:var(--gray);margin-bottom:6px;transition:color .2s}
 .foot-col a:hover{color:var(--accent)}
 .foot-bottom{
-  padding:20px 32px;font-size:11px;color:var(--dim);
-  border-top:1px solid var(--stroke);
-  display:flex;justify-content:space-between;max-width:900px;
+  padding:20px 0;font-size:11px;color:var(--dim);
+  border-top:1px solid var(--stroke);margin-top:32px;
+  display:flex;justify-content:space-between;
 }
 
 /* ══ MODALS ══ */
@@ -271,15 +278,23 @@ footer{
 
 /* ══ RESPONSIVE ══ */
 @media(max-width:768px){
+  .container{padding:0 20px}
+  .nav-inner{padding:0 20px}
   .numbers{grid-template-columns:repeat(2,1fr)}
-  .services-grid,.testi-grid{grid-template-columns:1fr}
+  .services-grid{grid-template-columns:1fr}
+  .testi-grid{grid-template-columns:1fr}
   .form-row{flex-direction:column}
-  nav{padding:16px 20px}
+  nav{padding:16px 0}
   .nav-right a:not(.nav-btn){display:none}
-  .hero,section,.numbers{padding-left:20px;padding-right:20px}
-  footer,.foot-bottom{padding-left:20px;padding-right:20px}
+  .hero{padding:120px 0 60px}
+  .hero h1{font-size:clamp(28px,8vw,42px)}
+  .section{padding:60px 0}
   .foot-links{gap:24px}
   .marquee-wrap{display:none}
+  .divider{padding:0 20px}
+  .proc{grid-template-columns:40px 1fr;gap:14px}
+  .proc-num{font-size:24px}
+  .contact-wrap{max-width:100%}
 }
 </style>
 </head>
@@ -287,24 +302,29 @@ footer{
 
 <div class="scroll-bar" id="scrollBar"></div>
 
+<!-- NAV -->
 <nav>
-  <div class="nav-logo">AUTO<span>MORIA</span></div>
-  <div class="nav-right">
-    <a href="#services">Services</a>
-    <a href="#proof">Reviews</a>
-    <a href="#contact" class="nav-btn">Book Demo</a>
+  <div class="nav-inner">
+    <div class="nav-logo">AUTO<span>MORIA</span></div>
+    <div class="nav-right">
+      <a href="#services">Services</a>
+      <a href="#proof">Reviews</a>
+      <a href="#contact" class="nav-btn">Book Demo</a>
+    </div>
   </div>
 </nav>
 
 <!-- HERO -->
 <div class="hero">
-  <div class="hero-glow"></div>
-  <div class="hero-tag"><span class="dot"></span> AI Receptionist</div>
-  <h1>Your customers are calling.<br><em>Is anyone answering?</em></h1>
-  <p>Most plumbing companies lose 30–40% of new business to missed calls. Automoria answers every call, books every job, and follows up — 24 hours a day, 7 days a week.</p>
-  <div class="hero-actions">
-    <a href="#contact" class="btn-main">Book a Free Demo</a>
-    <a href="#services" class="btn-outline">Learn More</a>
+  <div class="container">
+    <div class="hero-glow"></div>
+    <div class="hero-tag"><span class="dot"></span> AI Receptionist</div>
+    <h1>Your customers are calling.<br><em>Is anyone answering?</em></h1>
+    <p>Most plumbing companies lose 30–40% of new business to missed calls. Automoria answers every call, books every job, and follows up — 24 hours a day, 7 days a week.</p>
+    <div class="hero-actions">
+      <a href="#contact" class="btn-main">Book a Free Demo</a>
+      <a href="#services" class="btn-outline">Learn More</a>
+    </div>
   </div>
 </div>
 
@@ -317,148 +337,162 @@ footer{
 </div>
 
 <!-- NUMBERS -->
-<div class="numbers">
-  <div class="num reveal"><div class="num-val">24/7</div><div class="num-lbl">Call coverage</div></div>
-  <div class="num reveal"><div class="num-val">&lt;1s</div><div class="num-lbl">Answer time</div></div>
-  <div class="num reveal"><div class="num-val">100%</div><div class="num-lbl">Calls answered</div></div>
-  <div class="num reveal"><div class="num-val">$0</div><div class="num-lbl">Missed leads</div></div>
+<div class="container">
+  <div class="numbers">
+    <div class="num reveal"><div class="num-val">24/7</div><div class="num-lbl">Call coverage</div></div>
+    <div class="num reveal"><div class="num-val">&lt;1s</div><div class="num-lbl">Answer time</div></div>
+    <div class="num reveal"><div class="num-val">100%</div><div class="num-lbl">Calls answered</div></div>
+    <div class="num reveal"><div class="num-val">$0</div><div class="num-lbl">Missed leads</div></div>
+  </div>
 </div>
 
-<div class="divider"></div>
+<div class="divider"><div class="divider-line"></div></div>
 
 <!-- SERVICES -->
-<div class="section" id="services" style="padding:80px 32px;max-width:900px">
-  <div class="sec-head reveal">
-    <div class="sec-tag">01 — Services</div>
-    <div class="sec-title">What you get</div>
-  </div>
-  <div class="services-grid">
-    <div class="svc reveal">
-      <div class="svc-top"><div class="svc-icon">📞</div><span class="svc-num">01</span></div>
-      <h3>Call Answering</h3>
-      <p>Every inbound call answered instantly by an AI that sounds human. Handles questions, captures info, qualifies leads — even at 2 AM.</p>
+<div class="container">
+  <div class="section" id="services">
+    <div class="sec-head reveal">
+      <div class="sec-tag">01 — Services</div>
+      <div class="sec-title">What you get</div>
     </div>
-    <div class="svc reveal">
-      <div class="svc-top"><div class="svc-icon">📅</div><span class="svc-num">02</span></div>
-      <h3>Job Booking</h3>
-      <p>Books appointments directly into your calendar based on your real availability. No double bookings, no phone tag.</p>
-    </div>
-    <div class="svc reveal">
-      <div class="svc-top"><div class="svc-icon">💬</div><span class="svc-num">03</span></div>
-      <h3>Text Follow-Ups</h3>
-      <p>Automated confirmations and reminders that keep customers engaged and cut no-shows. Every lead gets followed up on.</p>
-    </div>
-    <div class="svc reveal">
-      <div class="svc-top"><div class="svc-icon">🛡️</div><span class="svc-num">04</span></div>
-      <h3>Your Brand</h3>
-      <p>Trained on your services, your pricing, your area. Customers talk to your business, not a generic answering service.</p>
+    <div class="services-grid">
+      <div class="svc reveal">
+        <div class="svc-top"><div class="svc-icon">📞</div><span class="svc-num">01</span></div>
+        <h3>Call Answering</h3>
+        <p>Every inbound call answered instantly by an AI that sounds human. Handles questions, captures info, qualifies leads — even at 2 AM.</p>
+      </div>
+      <div class="svc reveal">
+        <div class="svc-top"><div class="svc-icon">📅</div><span class="svc-num">02</span></div>
+        <h3>Job Booking</h3>
+        <p>Books appointments directly into your calendar based on your real availability. No double bookings, no phone tag.</p>
+      </div>
+      <div class="svc reveal">
+        <div class="svc-top"><div class="svc-icon">💬</div><span class="svc-num">03</span></div>
+        <h3>Text Follow-Ups</h3>
+        <p>Automated confirmations and reminders that keep customers engaged and cut no-shows. Every lead gets followed up on.</p>
+      </div>
+      <div class="svc reveal">
+        <div class="svc-top"><div class="svc-icon">🛡️</div><span class="svc-num">04</span></div>
+        <h3>Your Brand</h3>
+        <p>Trained on your services, your pricing, your area. Customers talk to your business, not a generic answering service.</p>
+      </div>
     </div>
   </div>
 </div>
 
 <!-- PROCESS -->
-<div style="padding:0 32px 80px;max-width:900px">
-  <div class="sec-head reveal">
-    <div class="sec-tag">02 — Process</div>
-    <div class="sec-title">Live in 48 hours</div>
-  </div>
-  <div class="process">
-    <div class="proc reveal">
-      <div class="proc-num">01</div>
-      <div><h3>Discovery call</h3><p>30-minute Zoom. We learn your business, services, and how you want calls handled.</p></div>
+<div class="container">
+  <div style="padding:0 0 80px">
+    <div class="sec-head reveal">
+      <div class="sec-tag">02 — Process</div>
+      <div class="sec-title">Live in 48 hours</div>
     </div>
-    <div class="proc reveal">
-      <div class="proc-num">02</div>
-      <div><h3>Custom build</h3><p>We configure your AI receptionist with your business details, service area, and availability.</p></div>
-    </div>
-    <div class="proc reveal">
-      <div class="proc-num">03</div>
-      <div><h3>Go live</h3><p>Flip the switch. Calls get answered, jobs get booked, customers get follow-ups. You do the work.</p></div>
+    <div class="process">
+      <div class="proc reveal">
+        <div class="proc-num">01</div>
+        <div><h3>Discovery call</h3><p>30-minute Zoom. We learn your business, services, and how you want calls handled.</p></div>
+      </div>
+      <div class="proc reveal">
+        <div class="proc-num">02</div>
+        <div><h3>Custom build</h3><p>We configure your AI receptionist with your business details, service area, and availability.</p></div>
+      </div>
+      <div class="proc reveal">
+        <div class="proc-num">03</div>
+        <div><h3>Go live</h3><p>Flip the switch. Calls get answered, jobs get booked, customers get follow-ups. You do the work.</p></div>
+      </div>
     </div>
   </div>
 </div>
 
-<div class="divider"></div>
+<div class="divider"><div class="divider-line"></div></div>
 
 <!-- TESTIMONIALS -->
-<div style="padding:80px 32px;max-width:900px" id="proof">
-  <div class="sec-head reveal">
-    <div class="sec-tag">03 — Proof</div>
-    <div class="sec-title">What owners are saying</div>
-  </div>
-  <div class="testi-grid">
-    <div class="testi reveal">
-      <div class="testi-stars">★★★★★</div>
-      <div class="testi-text">We were missing 5-6 calls a week when my guys were out on jobs. Since switching, every call gets answered. Booked 30% more jobs this month.</div>
-      <div class="testi-who">
-        <div class="testi-av">MR</div>
-        <div><div class="testi-name">Mike R.</div><div class="testi-co">Rapid Flow Plumbing · Irvine, CA</div></div>
-      </div>
+<div class="container">
+  <div class="section" id="proof">
+    <div class="sec-head reveal">
+      <div class="sec-tag">03 — Proof</div>
+      <div class="sec-title">What owners are saying</div>
     </div>
-    <div class="testi reveal">
-      <div class="testi-stars">★★★★★</div>
-      <div class="testi-text">Was paying a receptionist $3,500/month and she still missed calls after 5. This handles everything 24/7 for a fraction of the cost.</div>
-      <div class="testi-who">
-        <div class="testi-av">JT</div>
-        <div><div class="testi-name">James T.</div><div class="testi-co">Pacific Coast Plumbing · Anaheim, CA</div></div>
+    <div class="testi-grid">
+      <div class="testi reveal">
+        <div class="testi-stars">★★★★★</div>
+        <div class="testi-text">We were missing 5-6 calls a week when my guys were out on jobs. Since switching, every call gets answered. Booked 30% more jobs this month.</div>
+        <div class="testi-who">
+          <div class="testi-av">MR</div>
+          <div><div class="testi-name">Mike R.</div><div class="testi-co">Rapid Flow Plumbing · Irvine, CA</div></div>
+        </div>
       </div>
-    </div>
-    <div class="testi reveal">
-      <div class="testi-stars">★★★★★</div>
-      <div class="testi-text">My customers don't even realize they're not talking to a real person. It books the jobs, sends confirmations — I just show up and work.</div>
-      <div class="testi-who">
-        <div class="testi-av">DL</div>
-        <div><div class="testi-name">David L.</div><div class="testi-co">SoCal Drain Pros · Huntington Beach, CA</div></div>
+      <div class="testi reveal">
+        <div class="testi-stars">★★★★★</div>
+        <div class="testi-text">Was paying a receptionist $3,500/month and she still missed calls after 5. This handles everything 24/7 for a fraction of the cost.</div>
+        <div class="testi-who">
+          <div class="testi-av">JT</div>
+          <div><div class="testi-name">James T.</div><div class="testi-co">Pacific Coast Plumbing · Anaheim, CA</div></div>
+        </div>
+      </div>
+      <div class="testi reveal">
+        <div class="testi-stars">★★★★★</div>
+        <div class="testi-text">My customers don't even realize they're not talking to a real person. It books the jobs, sends confirmations — I just show up and work.</div>
+        <div class="testi-who">
+          <div class="testi-av">DL</div>
+          <div><div class="testi-name">David L.</div><div class="testi-co">SoCal Drain Pros · Huntington Beach, CA</div></div>
+        </div>
       </div>
     </div>
   </div>
 </div>
 
-<div class="divider"></div>
+<div class="divider"><div class="divider-line"></div></div>
 
 <!-- CONTACT -->
-<div style="padding:80px 32px;max-width:900px" id="contact">
-  <div class="sec-head reveal">
-    <div class="sec-tag">04 — Contact</div>
-    <div class="sec-title">Book a free demo</div>
-  </div>
-  <div class="contact-wrap reveal">
-    <div class="form">
-      <div class="form-row">
-        <div class="field"><label>First Name</label><input type="text" placeholder="John" required></div>
-        <div class="field"><label>Last Name</label><input type="text" placeholder="Smith" required></div>
+<div class="container">
+  <div class="section" id="contact">
+    <div class="sec-head reveal">
+      <div class="sec-tag">04 — Contact</div>
+      <div class="sec-title">Book a free demo</div>
+    </div>
+    <div class="contact-wrap reveal">
+      <div class="form">
+        <div class="form-row">
+          <div class="field"><label>First Name</label><input type="text" placeholder="John" required></div>
+          <div class="field"><label>Last Name</label><input type="text" placeholder="Smith" required></div>
+        </div>
+        <div class="form-row">
+          <div class="field"><label>Email</label><input type="email" placeholder="john@company.com" required></div>
+          <div class="field"><label>Phone</label><input type="tel" placeholder="(949) 555-0123" required></div>
+        </div>
+        <div class="field"><label>Company</label><input type="text" placeholder="Your plumbing company name"></div>
+        <div class="field"><label>Message</label><textarea placeholder="Tell us about your business..."></textarea></div>
+        <div class="consent">
+          <label>
+            <input type="checkbox" required>
+            <span>I agree to receive SMS messages from Automoria including appointment confirmations, reminders, and follow-ups. Message frequency varies. Msg &amp; data rates may apply. Reply <strong>STOP</strong> to opt out anytime. Reply <strong>HELP</strong> for help.</span>
+          </label>
+          <div class="consent-sub">By submitting, you agree to our <a href="#" onclick="openM('priv');return false">Privacy Policy</a> and <a href="#" onclick="openM('tos');return false">Terms of Service</a>. We will never sell your information.</div>
+        </div>
+        <button class="btn-main" style="width:100%;padding:16px;font-size:15px;border-radius:10px;margin-top:4px;text-align:center" onclick="doSubmit()">Book My Free Demo →</button>
       </div>
-      <div class="form-row">
-        <div class="field"><label>Email</label><input type="email" placeholder="john@company.com" required></div>
-        <div class="field"><label>Phone</label><input type="tel" placeholder="(949) 555-0123" required></div>
-      </div>
-      <div class="field"><label>Company</label><input type="text" placeholder="Your plumbing company name"></div>
-      <div class="field"><label>Message</label><textarea placeholder="Tell us about your business..."></textarea></div>
-      <div class="consent">
-        <label>
-          <input type="checkbox" required>
-          <span>I agree to receive SMS messages from Automoria including appointment confirmations, reminders, and follow-ups. Message frequency varies. Msg &amp; data rates may apply. Reply <strong>STOP</strong> to opt out anytime. Reply <strong>HELP</strong> for help.</span>
-        </label>
-        <div class="consent-sub">By submitting, you agree to our <a href="#" onclick="openM('priv');return false">Privacy Policy</a> and <a href="#" onclick="openM('tos');return false">Terms of Service</a>. We will never sell your information.</div>
-      </div>
-      <button class="btn-main" style="width:100%;padding:16px;font-size:15px;border-radius:10px;margin-top:4px;text-align:center" onclick="doSubmit()">Book My Free Demo →</button>
     </div>
   </div>
 </div>
 
 <!-- FOOTER -->
 <footer>
-  <div class="foot-left">
-    <div class="nav-logo" style="font-size:13px">AUTO<span style="color:var(--accent)">MORIA</span></div>
-    <p>AI receptionist services for plumbing companies in Orange County, CA.</p>
-  </div>
-  <div class="foot-links">
-    <div class="foot-col"><h4>Navigate</h4><a href="#services">Services</a><a href="#proof">Reviews</a><a href="#contact">Contact</a></div>
-    <div class="foot-col"><h4>Legal</h4><a href="#" onclick="openM('priv');return false">Privacy Policy</a><a href="#" onclick="openM('tos');return false">Terms of Service</a></div>
-    <div class="foot-col"><h4>Reach Out</h4><a href="mailto:help@automoria.com">help@automoria.com</a><a href="tel:+19495652316">(949) 565-2316</a><a>Orange County, CA</a></div>
+  <div class="container">
+    <div class="foot-inner">
+      <div class="foot-left">
+        <div class="nav-logo" style="font-size:13px">AUTO<span style="color:var(--accent)">MORIA</span></div>
+        <p>AI receptionist services for plumbing companies in Orange County, CA.</p>
+      </div>
+      <div class="foot-links">
+        <div class="foot-col"><h4>Navigate</h4><a href="#services">Services</a><a href="#proof">Reviews</a><a href="#contact">Contact</a></div>
+        <div class="foot-col"><h4>Legal</h4><a href="#" onclick="openM('priv');return false">Privacy Policy</a><a href="#" onclick="openM('tos');return false">Terms of Service</a></div>
+        <div class="foot-col"><h4>Reach Out</h4><a href="mailto:help@automoria.com">help@automoria.com</a><a href="tel:+19495652316">(949) 565-2316</a><a>Orange County, CA</a></div>
+      </div>
+    </div>
+    <div class="foot-bottom"><span>© 2026 Automoria</span><span>Nathan Vo · Sole Proprietor</span></div>
   </div>
 </footer>
-<div class="foot-bottom"><span>© 2026 Automoria</span><span>Nathan Vo · Sole Proprietor</span></div>
 
 <!-- PRIVACY -->
 <div class="overlay" id="priv"><div class="legal">
