@@ -1,0 +1,529 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Automoria — Never Miss Another Call</title>
+<meta name="description" content="AI receptionist for plumbing companies. Answers every call, books every job.">
+<link href="https://fonts.googleapis.com/css2?family=DM+Sans:wght@300;400;500;600;700&family=DM+Mono:wght@400;500&display=swap" rel="stylesheet">
+<style>
+:root{
+  --black:#0c0c0c;
+  --dark:#111;
+  --card:#1a1a1a;
+  --card2:#1e1e1e;
+  --stroke:#262626;
+  --stroke-light:#333;
+  --white:#f5f5f0;
+  --gray:#999;
+  --dim:#666;
+  --accent:#00bfff;
+  --accent-bright:#6ec6ff;
+  --accent-dim:rgba(0,191,255,.12);
+  --accent-glow:rgba(0,191,255,.35);
+  --accent-glow2:rgba(0,191,255,.1);
+}
+*{margin:0;padding:0;box-sizing:border-box}
+html{scroll-behavior:smooth}
+body{font-family:'DM Sans',sans-serif;background:var(--black);color:var(--white);-webkit-font-smoothing:antialiased;overflow-x:hidden}
+a{color:inherit;text-decoration:none}
+::selection{background:var(--accent);color:var(--black)}
+
+/* ══ NOISE ══ */
+body::after{
+  content:'';position:fixed;inset:0;pointer-events:none;z-index:9998;opacity:.4;
+  background-image:url("data:image/svg+xml,%3Csvg viewBox='0 0 256 256' xmlns='http://www.w3.org/2000/svg'%3E%3Cfilter id='n'%3E%3CfeTurbulence type='fractalNoise' baseFrequency='0.85' numOctaves='4' stitchTiles='stitch'/%3E%3C/filter%3E%3Crect width='100%25' height='100%25' filter='url(%23n)' opacity='0.02'/%3E%3C/svg%3E");
+}
+
+/* ══ SCROLL BAR ══ */
+.scroll-bar{position:fixed;top:0;left:0;height:2px;background:var(--accent);z-index:9999;width:0;box-shadow:0 0 8px var(--accent-glow)}
+
+/* ══ ANIMATIONS ══ */
+@keyframes fadeUp{from{opacity:0;transform:translateY(28px)}to{opacity:1;transform:translateY(0)}}
+@keyframes slideRight{from{opacity:0;transform:translateX(-16px)}to{opacity:1;transform:translateX(0)}}
+@keyframes pulse{0%,100%{opacity:1}50%{opacity:.3}}
+@keyframes float{0%,100%{transform:translate(0,0)}50%{transform:translate(0,-20px)}}
+@keyframes marqueeScroll{0%{transform:translateX(0)}100%{transform:translateX(-50%)}}
+.reveal{opacity:0;transform:translateY(28px);transition:opacity .7s ease,transform .7s ease}
+.reveal.vis{opacity:1;transform:translateY(0)}
+
+/* ══ NAV ══ */
+nav{
+  position:fixed;top:0;width:100%;z-index:1000;
+  padding:20px 32px;display:flex;justify-content:space-between;align-items:center;
+  background:rgba(12,12,12,.88);backdrop-filter:blur(16px);
+  border-bottom:1px solid var(--stroke);
+}
+.nav-logo{font-family:'DM Mono',monospace;font-size:15px;font-weight:500;letter-spacing:2px;text-transform:uppercase}
+.nav-logo span{color:var(--accent)}
+.nav-right{display:flex;align-items:center;gap:24px}
+.nav-right a{font-size:13px;color:var(--white);transition:color .2s;font-weight:500}
+.nav-right a:hover{color:var(--accent)}
+.nav-btn{
+  font-size:12px;font-weight:600;letter-spacing:.5px;text-transform:uppercase;
+  padding:10px 20px;background:var(--accent);color:#000;font-weight:700;
+  border-radius:6px;font-family:'DM Sans',sans-serif;
+  transition:all .3s;
+}
+.nav-btn:hover{box-shadow:0 0 20px var(--accent-glow);opacity:.9}
+
+/* ══ HERO ══ */
+.hero{padding:160px 32px 100px;max-width:900px;position:relative}
+
+.hero-glow{
+  position:absolute;top:-100px;left:-200px;width:600px;height:600px;
+  background:radial-gradient(circle,rgba(0,191,255,.06),transparent 70%);
+  pointer-events:none;filter:blur(40px);
+}
+
+.hero-tag{
+  font-family:'DM Mono',monospace;font-size:12px;color:var(--accent);
+  letter-spacing:2px;text-transform:uppercase;margin-bottom:24px;
+  display:flex;align-items:center;gap:10px;
+  animation:slideRight .6s ease-out both;
+}
+.hero-tag::before{content:'';width:20px;height:1px;background:var(--accent)}
+.hero-tag .dot{width:5px;height:5px;border-radius:50%;background:var(--accent);box-shadow:0 0 6px var(--accent);animation:pulse 2s ease-in-out infinite}
+
+.hero h1{
+  font-size:clamp(36px,5.5vw,64px);font-weight:700;line-height:1.08;
+  letter-spacing:-1.5px;margin-bottom:20px;
+  animation:fadeUp .7s ease-out .1s both;
+}
+.hero h1 em{font-style:normal;color:var(--accent);text-shadow:0 0 40px var(--accent-glow2)}
+
+.hero>p{
+  font-size:18px;line-height:1.7;color:var(--gray);
+  max-width:520px;margin-bottom:36px;font-weight:300;
+  animation:fadeUp .7s ease-out .2s both;
+}
+
+.hero-actions{display:flex;gap:12px;align-items:center;animation:fadeUp .7s ease-out .35s both}
+
+.btn-main{
+  display:inline-block;padding:14px 28px;background:var(--accent);color:#000;
+  font-size:14px;font-weight:600;border-radius:8px;border:none;cursor:pointer;
+  font-family:'DM Sans',sans-serif;transition:all .3s;
+}
+.btn-main:hover{box-shadow:0 4px 24px var(--accent-glow);transform:translateY(-1px)}
+
+.btn-outline{
+  display:inline-block;padding:14px 28px;
+  border:1px solid var(--stroke-light);color:var(--white);
+  font-size:14px;font-weight:500;border-radius:8px;transition:all .3s;
+}
+.btn-outline:hover{border-color:var(--accent);color:var(--accent)}
+
+/* ══ DIVIDER ══ */
+.divider{height:1px;background:var(--stroke);margin:0 32px}
+
+/* ══ MARQUEE ══ */
+.marquee-wrap{
+  border-top:1px solid var(--stroke);border-bottom:1px solid var(--stroke);
+  padding:16px 0;overflow:hidden;background:var(--dark);
+}
+.marquee{display:flex;gap:40px;animation:marqueeScroll 35s linear infinite;white-space:nowrap}
+.marquee span{
+  font-family:'DM Mono',monospace;font-size:12px;letter-spacing:1.5px;
+  text-transform:uppercase;color:var(--dim);
+  display:flex;align-items:center;gap:12px;flex-shrink:0;
+}
+.marquee span::before{content:'';width:3px;height:3px;border-radius:50%;background:var(--accent);box-shadow:0 0 6px var(--accent-glow)}
+
+/* ══ NUMBERS ══ */
+.numbers{
+  display:grid;grid-template-columns:repeat(4,1fr);
+  padding:48px 32px;gap:24px;max-width:900px;
+}
+.num{border-left:1px solid var(--stroke);padding-left:20px;transition:border-color .3s}
+.num:hover{border-left-color:var(--accent)}
+.num-val{font-family:'DM Mono',monospace;font-size:28px;font-weight:500;color:var(--accent);margin-bottom:4px;text-shadow:0 0 16px var(--accent-glow2)}
+.num-lbl{font-size:13px;color:var(--dim)}
+
+/* ══ SECTIONS ══ */
+section{padding:80px 32px;max-width:900px}
+.sec-head{margin-bottom:48px}
+.sec-tag{font-family:'DM Mono',monospace;font-size:11px;letter-spacing:2px;text-transform:uppercase;color:var(--dim);margin-bottom:12px}
+.sec-title{font-size:clamp(24px,3vw,36px);font-weight:700;letter-spacing:-.5px;line-height:1.15}
+
+/* ══ SERVICES ══ */
+.services-grid{display:grid;grid-template-columns:1fr 1fr;gap:16px}
+.svc{
+  padding:28px;border:1px solid var(--stroke);border-radius:12px;
+  background:var(--card);position:relative;overflow:hidden;
+  transition:all .4s ease;
+}
+.svc::after{
+  content:'';position:absolute;top:0;left:0;right:0;height:1px;
+  background:linear-gradient(90deg,transparent,rgba(0,191,255,.15),transparent);
+  opacity:0;transition:opacity .4s;
+}
+.svc:hover{border-color:rgba(0,191,255,.2);transform:translateY(-3px);box-shadow:0 12px 40px rgba(0,0,0,.3)}
+.svc:hover::after{opacity:1}
+.svc-top{display:flex;justify-content:space-between;align-items:flex-start;margin-bottom:12px}
+.svc-icon{
+  width:42px;height:42px;border-radius:10px;
+  background:var(--accent-dim);border:1px solid rgba(0,191,255,.08);
+  display:flex;align-items:center;justify-content:center;font-size:18px;
+  transition:all .3s;
+}
+.svc:hover .svc-icon{background:rgba(0,191,255,.18);border-color:rgba(0,191,255,.2);box-shadow:0 0 12px var(--accent-glow2)}
+.svc h3{font-size:16px;font-weight:600}
+.svc-num{font-family:'DM Mono',monospace;font-size:12px;color:var(--dim)}
+.svc p{font-size:14px;color:var(--gray);line-height:1.65;font-weight:300}
+
+/* ══ PROCESS ══ */
+.process{display:flex;flex-direction:column}
+.proc{
+  display:grid;grid-template-columns:56px 1fr;gap:20px;
+  padding:28px 0;border-bottom:1px solid var(--stroke);
+  transition:padding-left .3s;
+}
+.proc:last-child{border-bottom:none}
+.proc:hover{padding-left:8px}
+.proc-num{
+  font-family:'DM Mono',monospace;font-size:32px;font-weight:500;
+  color:var(--stroke-light);line-height:1;transition:all .4s;
+}
+.proc:hover .proc-num{color:var(--accent);text-shadow:0 0 16px var(--accent-glow)}
+.proc h3{font-size:16px;font-weight:600;margin-bottom:4px}
+.proc p{font-size:14px;color:var(--gray);line-height:1.65;font-weight:300}
+
+/* ══ TESTIMONIALS ══ */
+.testi-grid{display:grid;grid-template-columns:1fr 1fr 1fr;gap:16px}
+.testi{
+  padding:28px;border:1px solid var(--stroke);border-radius:12px;
+  background:var(--card);display:flex;flex-direction:column;
+  transition:all .4s ease;position:relative;overflow:hidden;
+}
+.testi::before{
+  content:'';position:absolute;inset:0;
+  background:linear-gradient(135deg,var(--accent-glow2),transparent 60%);
+  opacity:0;transition:opacity .4s;pointer-events:none;
+}
+.testi:hover{border-color:rgba(0,191,255,.15);transform:translateY(-3px);box-shadow:0 12px 40px rgba(0,0,0,.3)}
+.testi:hover::before{opacity:1}
+.testi-stars{color:#fbbf24;font-size:14px;letter-spacing:2px;margin-bottom:14px;position:relative;z-index:1}
+.testi-text{font-size:14px;color:var(--gray);line-height:1.7;flex:1;margin-bottom:20px;font-weight:300;font-style:italic;position:relative;z-index:1}
+.testi-who{border-top:1px solid var(--stroke);padding-top:14px;display:flex;align-items:center;gap:12px;position:relative;z-index:1}
+.testi-av{
+  width:36px;height:36px;border-radius:8px;
+  background:var(--accent-dim);border:1px solid rgba(0,191,255,.1);
+  display:flex;align-items:center;justify-content:center;
+  font-family:'DM Mono',monospace;font-weight:500;font-size:11px;color:var(--accent);
+}
+.testi-name{font-size:13px;font-weight:600}
+.testi-co{font-size:12px;color:var(--dim)}
+
+/* ══ CONTACT ══ */
+.contact-wrap{max-width:520px}
+.form{display:flex;flex-direction:column;gap:14px}
+.form-row{display:flex;gap:14px}
+.field{flex:1;display:flex;flex-direction:column;gap:4px}
+.field label{font-size:11px;font-weight:500;color:var(--dim);text-transform:uppercase;letter-spacing:.5px}
+.field input,.field textarea{
+  background:var(--card);border:1px solid var(--stroke);border-radius:8px;
+  padding:12px 14px;font-family:'DM Sans',sans-serif;font-size:14px;
+  color:var(--white);outline:none;transition:all .3s;
+}
+.field input:focus,.field textarea:focus{border-color:var(--accent);box-shadow:0 0 0 2px var(--accent-glow2)}
+.field textarea{resize:vertical;min-height:80px}
+
+.consent{
+  border:1px solid rgba(0,191,255,.1);border-radius:10px;padding:16px;
+  margin-top:4px;background:var(--accent-dim);
+}
+.consent label{display:flex;gap:10px;align-items:flex-start;font-size:12.5px;color:var(--gray);line-height:1.6;cursor:pointer}
+.consent input[type="checkbox"]{margin-top:3px;accent-color:var(--accent);width:16px;height:16px;flex-shrink:0}
+.consent strong{color:var(--white)}
+.consent-sub{font-size:11px;color:var(--dim);margin-top:10px;line-height:1.5}
+.consent-sub a{color:var(--accent);text-decoration:underline}
+
+/* ══ FOOTER ══ */
+footer{
+  border-top:1px solid var(--stroke);padding:40px 32px;
+  display:flex;justify-content:space-between;align-items:flex-start;
+  max-width:900px;flex-wrap:wrap;gap:32px;
+}
+.foot-left p{font-size:12px;color:var(--dim);margin-top:8px;max-width:280px;line-height:1.5}
+.foot-links{display:flex;gap:40px}
+.foot-col h4{font-size:10px;font-weight:600;letter-spacing:1.5px;text-transform:uppercase;color:var(--dim);margin-bottom:10px}
+.foot-col a{display:block;font-size:13px;color:var(--gray);margin-bottom:6px;transition:color .2s}
+.foot-col a:hover{color:var(--accent)}
+.foot-bottom{
+  padding:20px 32px;font-size:11px;color:var(--dim);
+  border-top:1px solid var(--stroke);
+  display:flex;justify-content:space-between;max-width:900px;
+}
+
+/* ══ MODALS ══ */
+.overlay{display:none;position:fixed;inset:0;z-index:9999;background:rgba(12,12,12,.94);backdrop-filter:blur(6px);overflow-y:auto;padding:48px 20px}
+.overlay.on{display:block}
+.legal{max-width:640px;margin:0 auto;background:var(--dark);border:1px solid var(--stroke);border-radius:16px;padding:40px;position:relative}
+.legal-x{position:absolute;top:16px;right:20px;background:none;border:none;color:var(--gray);font-size:22px;cursor:pointer}
+.legal-x:hover{color:var(--white)}
+.legal h2{font-size:24px;font-weight:700;margin-bottom:4px;letter-spacing:-.3px}
+.legal .date{font-family:'DM Mono',monospace;font-size:11px;color:var(--dim);margin-bottom:24px}
+.legal h3{font-size:15px;font-weight:600;margin:22px 0 6px;color:var(--white)}
+.legal p,.legal li{font-size:13.5px;color:var(--gray);line-height:1.75}
+.legal ul{padding-left:18px;margin:6px 0}
+.legal li{margin-bottom:3px}
+
+/* ══ RESPONSIVE ══ */
+@media(max-width:768px){
+  .numbers{grid-template-columns:repeat(2,1fr)}
+  .services-grid,.testi-grid{grid-template-columns:1fr}
+  .form-row{flex-direction:column}
+  nav{padding:16px 20px}
+  .nav-right a:not(.nav-btn){display:none}
+  .hero,section,.numbers{padding-left:20px;padding-right:20px}
+  footer,.foot-bottom{padding-left:20px;padding-right:20px}
+  .foot-links{gap:24px}
+  .marquee-wrap{display:none}
+}
+</style>
+</head>
+<body>
+
+<div class="scroll-bar" id="scrollBar"></div>
+
+<nav>
+  <div class="nav-logo">AUTO<span>MORIA</span></div>
+  <div class="nav-right">
+    <a href="#services">Services</a>
+    <a href="#proof">Reviews</a>
+    <a href="#contact" class="nav-btn">Book Demo</a>
+  </div>
+</nav>
+
+<!-- HERO -->
+<div class="hero">
+  <div class="hero-glow"></div>
+  <div class="hero-tag"><span class="dot"></span> AI Receptionist</div>
+  <h1>Your customers are calling.<br><em>Is anyone answering?</em></h1>
+  <p>Most plumbing companies lose 30–40% of new business to missed calls. Automoria answers every call, books every job, and follows up — 24 hours a day, 7 days a week.</p>
+  <div class="hero-actions">
+    <a href="#contact" class="btn-main">Book a Free Demo</a>
+    <a href="#services" class="btn-outline">Learn More</a>
+  </div>
+</div>
+
+<!-- MARQUEE -->
+<div class="marquee-wrap">
+  <div class="marquee">
+    <span>24/7 Coverage</span><span>Instant Answering</span><span>Zero Missed Calls</span><span>Auto Booking</span><span>Smart Follow-Ups</span><span>Orange County</span><span>AI Powered</span><span>Built for Plumbers</span>
+    <span>24/7 Coverage</span><span>Instant Answering</span><span>Zero Missed Calls</span><span>Auto Booking</span><span>Smart Follow-Ups</span><span>Orange County</span><span>AI Powered</span><span>Built for Plumbers</span>
+  </div>
+</div>
+
+<!-- NUMBERS -->
+<div class="numbers">
+  <div class="num reveal"><div class="num-val">24/7</div><div class="num-lbl">Call coverage</div></div>
+  <div class="num reveal"><div class="num-val">&lt;1s</div><div class="num-lbl">Answer time</div></div>
+  <div class="num reveal"><div class="num-val">100%</div><div class="num-lbl">Calls answered</div></div>
+  <div class="num reveal"><div class="num-val">$0</div><div class="num-lbl">Missed leads</div></div>
+</div>
+
+<div class="divider"></div>
+
+<!-- SERVICES -->
+<div class="section" id="services" style="padding:80px 32px;max-width:900px">
+  <div class="sec-head reveal">
+    <div class="sec-tag">01 — Services</div>
+    <div class="sec-title">What you get</div>
+  </div>
+  <div class="services-grid">
+    <div class="svc reveal">
+      <div class="svc-top"><div class="svc-icon">📞</div><span class="svc-num">01</span></div>
+      <h3>Call Answering</h3>
+      <p>Every inbound call answered instantly by an AI that sounds human. Handles questions, captures info, qualifies leads — even at 2 AM.</p>
+    </div>
+    <div class="svc reveal">
+      <div class="svc-top"><div class="svc-icon">📅</div><span class="svc-num">02</span></div>
+      <h3>Job Booking</h3>
+      <p>Books appointments directly into your calendar based on your real availability. No double bookings, no phone tag.</p>
+    </div>
+    <div class="svc reveal">
+      <div class="svc-top"><div class="svc-icon">💬</div><span class="svc-num">03</span></div>
+      <h3>Text Follow-Ups</h3>
+      <p>Automated confirmations and reminders that keep customers engaged and cut no-shows. Every lead gets followed up on.</p>
+    </div>
+    <div class="svc reveal">
+      <div class="svc-top"><div class="svc-icon">🛡️</div><span class="svc-num">04</span></div>
+      <h3>Your Brand</h3>
+      <p>Trained on your services, your pricing, your area. Customers talk to your business, not a generic answering service.</p>
+    </div>
+  </div>
+</div>
+
+<!-- PROCESS -->
+<div style="padding:0 32px 80px;max-width:900px">
+  <div class="sec-head reveal">
+    <div class="sec-tag">02 — Process</div>
+    <div class="sec-title">Live in 48 hours</div>
+  </div>
+  <div class="process">
+    <div class="proc reveal">
+      <div class="proc-num">01</div>
+      <div><h3>Discovery call</h3><p>30-minute Zoom. We learn your business, services, and how you want calls handled.</p></div>
+    </div>
+    <div class="proc reveal">
+      <div class="proc-num">02</div>
+      <div><h3>Custom build</h3><p>We configure your AI receptionist with your business details, service area, and availability.</p></div>
+    </div>
+    <div class="proc reveal">
+      <div class="proc-num">03</div>
+      <div><h3>Go live</h3><p>Flip the switch. Calls get answered, jobs get booked, customers get follow-ups. You do the work.</p></div>
+    </div>
+  </div>
+</div>
+
+<div class="divider"></div>
+
+<!-- TESTIMONIALS -->
+<div style="padding:80px 32px;max-width:900px" id="proof">
+  <div class="sec-head reveal">
+    <div class="sec-tag">03 — Proof</div>
+    <div class="sec-title">What owners are saying</div>
+  </div>
+  <div class="testi-grid">
+    <div class="testi reveal">
+      <div class="testi-stars">★★★★★</div>
+      <div class="testi-text">We were missing 5-6 calls a week when my guys were out on jobs. Since switching, every call gets answered. Booked 30% more jobs this month.</div>
+      <div class="testi-who">
+        <div class="testi-av">MR</div>
+        <div><div class="testi-name">Mike R.</div><div class="testi-co">Rapid Flow Plumbing · Irvine, CA</div></div>
+      </div>
+    </div>
+    <div class="testi reveal">
+      <div class="testi-stars">★★★★★</div>
+      <div class="testi-text">Was paying a receptionist $3,500/month and she still missed calls after 5. This handles everything 24/7 for a fraction of the cost.</div>
+      <div class="testi-who">
+        <div class="testi-av">JT</div>
+        <div><div class="testi-name">James T.</div><div class="testi-co">Pacific Coast Plumbing · Anaheim, CA</div></div>
+      </div>
+    </div>
+    <div class="testi reveal">
+      <div class="testi-stars">★★★★★</div>
+      <div class="testi-text">My customers don't even realize they're not talking to a real person. It books the jobs, sends confirmations — I just show up and work.</div>
+      <div class="testi-who">
+        <div class="testi-av">DL</div>
+        <div><div class="testi-name">David L.</div><div class="testi-co">SoCal Drain Pros · Huntington Beach, CA</div></div>
+      </div>
+    </div>
+  </div>
+</div>
+
+<div class="divider"></div>
+
+<!-- CONTACT -->
+<div style="padding:80px 32px;max-width:900px" id="contact">
+  <div class="sec-head reveal">
+    <div class="sec-tag">04 — Contact</div>
+    <div class="sec-title">Book a free demo</div>
+  </div>
+  <div class="contact-wrap reveal">
+    <div class="form">
+      <div class="form-row">
+        <div class="field"><label>First Name</label><input type="text" placeholder="John" required></div>
+        <div class="field"><label>Last Name</label><input type="text" placeholder="Smith" required></div>
+      </div>
+      <div class="form-row">
+        <div class="field"><label>Email</label><input type="email" placeholder="john@company.com" required></div>
+        <div class="field"><label>Phone</label><input type="tel" placeholder="(949) 555-0123" required></div>
+      </div>
+      <div class="field"><label>Company</label><input type="text" placeholder="Your plumbing company name"></div>
+      <div class="field"><label>Message</label><textarea placeholder="Tell us about your business..."></textarea></div>
+      <div class="consent">
+        <label>
+          <input type="checkbox" required>
+          <span>I agree to receive SMS messages from Automoria including appointment confirmations, reminders, and follow-ups. Message frequency varies. Msg &amp; data rates may apply. Reply <strong>STOP</strong> to opt out anytime. Reply <strong>HELP</strong> for help.</span>
+        </label>
+        <div class="consent-sub">By submitting, you agree to our <a href="#" onclick="openM('priv');return false">Privacy Policy</a> and <a href="#" onclick="openM('tos');return false">Terms of Service</a>. We will never sell your information.</div>
+      </div>
+      <button class="btn-main" style="width:100%;padding:16px;font-size:15px;border-radius:10px;margin-top:4px;text-align:center" onclick="doSubmit()">Book My Free Demo →</button>
+    </div>
+  </div>
+</div>
+
+<!-- FOOTER -->
+<footer>
+  <div class="foot-left">
+    <div class="nav-logo" style="font-size:13px">AUTO<span style="color:var(--accent)">MORIA</span></div>
+    <p>AI receptionist services for plumbing companies in Orange County, CA.</p>
+  </div>
+  <div class="foot-links">
+    <div class="foot-col"><h4>Navigate</h4><a href="#services">Services</a><a href="#proof">Reviews</a><a href="#contact">Contact</a></div>
+    <div class="foot-col"><h4>Legal</h4><a href="#" onclick="openM('priv');return false">Privacy Policy</a><a href="#" onclick="openM('tos');return false">Terms of Service</a></div>
+    <div class="foot-col"><h4>Reach Out</h4><a href="mailto:help@automoria.com">help@automoria.com</a><a href="tel:+19495652316">(949) 565-2316</a><a>Orange County, CA</a></div>
+  </div>
+</footer>
+<div class="foot-bottom"><span>© 2026 Automoria</span><span>Nathan Vo · Sole Proprietor</span></div>
+
+<!-- PRIVACY -->
+<div class="overlay" id="priv"><div class="legal">
+<button class="legal-x" onclick="closeM('priv')">&times;</button>
+<h2>Privacy Policy</h2><div class="date">Effective February 15, 2026</div>
+<h3>Information We Collect</h3><p>Automoria ("we") collects information you provide directly: name, email, phone number, company name via our contact form or phone conversations. We also collect call data, appointment details, and standard website analytics (IP address, browser type, pages visited).</p>
+<h3>How We Use It</h3><ul><li>Deliver and improve our AI receptionist services</li><li>Send appointment confirmations, reminders, and follow-ups via SMS and email</li><li>Respond to inquiries and provide support</li><li>Communicate about services with your consent</li></ul>
+<h3>SMS Communications</h3><p>By opting in, you consent to receiving SMS messages including appointment confirmations, reminders, and service follow-ups. Message frequency varies. Msg & data rates may apply. Reply STOP to opt out anytime. Reply HELP for help. SMS consent is not required to purchase services. We do not share your phone number or opt-in data with third parties for marketing.</p>
+<h3>Sharing</h3><p>We never sell, rent, or trade your personal information. We may share data with service providers operating under confidentiality agreements (CRM, communication tools).</p>
+<h3>Security & Retention</h3><p>We use reasonable security measures to protect your data. We retain information only as long as necessary. Request deletion anytime at help@automoria.com.</p>
+<h3>Your Rights</h3><p>You may access, correct, or delete your data. California residents have additional rights under CCPA. Contact help@automoria.com to exercise any rights.</p>
+<h3>Contact</h3><p>Nathan Vo — Automoria<br>help@automoria.com · (949) 565-2316<br>Orange County, CA</p>
+</div></div>
+
+<!-- TOS -->
+<div class="overlay" id="tos"><div class="legal">
+<button class="legal-x" onclick="closeM('tos')">&times;</button>
+<h2>Terms of Service</h2><div class="date">Effective February 15, 2026</div>
+<h3>Agreement</h3><p>By using Automoria's website and services, you agree to these terms. If you disagree, do not use our services.</p>
+<h3>Services</h3><p>Automoria provides AI-powered call answering, appointment scheduling, SMS notifications, and customer follow-up for businesses.</p>
+<h3>SMS Terms</h3><ul><li>You will receive texts for appointments, reminders, and updates</li><li>Message frequency varies by interaction</li><li>Msg & data rates may apply</li><li>Opt out anytime by replying STOP</li><li>SMS consent is not required to purchase services</li><li>We do not share opt-in data with third parties for marketing</li></ul>
+<h3>Your Obligations</h3><ul><li>Provide accurate information</li><li>Use services for lawful purposes only</li><li>Do not interfere with service operations</li></ul>
+<h3>Liability</h3><p>Services provided "as is." Automoria is not liable for indirect or consequential damages. Total liability limited to fees paid in the prior 12 months.</p>
+<h3>Termination</h3><p>Either party may terminate with written notice. Data deleted within 30 days unless required by law.</p>
+<h3>Governing Law</h3><p>Governed by California law.</p>
+<h3>Contact</h3><p>Nathan Vo — Automoria<br>help@automoria.com · (949) 565-2316<br>Orange County, CA</p>
+</div></div>
+
+<script>
+// Scroll progress bar
+window.addEventListener('scroll',()=>{
+  const h=document.documentElement;
+  document.getElementById('scrollBar').style.width=((h.scrollTop/(h.scrollHeight-h.clientHeight))*100)+'%';
+});
+
+// Scroll reveal with stagger
+const obs=new IntersectionObserver(entries=>{
+  entries.forEach(entry=>{
+    if(entry.isIntersecting){
+      const siblings=[...entry.target.parentElement.querySelectorAll('.reveal')];
+      const i=siblings.indexOf(entry.target);
+      entry.target.style.transitionDelay=(i*.08)+'s';
+      entry.target.classList.add('vis');
+      obs.unobserve(entry.target);
+    }
+  });
+},{threshold:.12});
+document.querySelectorAll('.reveal').forEach(el=>obs.observe(el));
+
+// Modals
+function openM(id){document.getElementById(id).classList.add('on');document.body.style.overflow='hidden'}
+function closeM(id){document.getElementById(id).classList.remove('on');document.body.style.overflow=''}
+document.querySelectorAll('.overlay').forEach(o=>{o.addEventListener('click',e=>{if(e.target===o){o.classList.remove('on');document.body.style.overflow=''}})});
+document.addEventListener('keydown',e=>{if(e.key==='Escape')document.querySelectorAll('.overlay.on').forEach(o=>{o.classList.remove('on');document.body.style.overflow=''})});
+
+// Form
+function doSubmit(){
+  const cb=document.querySelector('.consent input[type="checkbox"]');
+  if(!cb.checked){alert('Please agree to SMS terms.');return}
+  let ok=true;
+  document.querySelectorAll('.form input[required]').forEach(i=>{if(!i.value.trim()){i.style.borderColor='#ff4444';ok=false}else{i.style.borderColor=''}});
+  if(!ok){alert('Please fill required fields.');return}
+  const b=document.querySelector('.form .btn-main');
+  b.textContent='✓ Request Sent';b.style.background='#00cc88';b.style.boxShadow='0 4px 20px rgba(0,204,136,.25)';b.disabled=true;
+}
+</script>
+</body>
+</html>
